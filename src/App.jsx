@@ -30,6 +30,25 @@ function App() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
+  useEffect(() => {
+    const fetchTasks = async () =>{
+     //CHAMAR A API
+    
+    const response = await fetch(
+      'https://jsonplaceholder.typicode.com/todos?_limit=10',
+      {
+    method: 'GET',
+      }
+    );
+     //PEGAR OS DADOS QUE ELA RETORNA
+        const data = await response.json()
+
+         //E ARMAZENAR NO ESTADO
+         setTasks(data)
+    }
+    fetchTasks();
+  }, []);
+
   function onTaskClick(taskId) {
     const newTasks = tasks.map((task) => {
       if (task.id === taskId) {
